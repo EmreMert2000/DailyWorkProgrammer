@@ -14,12 +14,11 @@ def open_add_note():
         else:
             messagebox.showwarning("Hata", "Boş not kaydedilemez!")
 
-    # Yeni Not Penceresi
+   
     add_note_window = tk.Toplevel(root)
     add_note_window.title("Yeni Not")
-    add_note_window.geometry("700x700")  # Kare boyut
-    add_note_window.resizable(False, False)  # Pencere boyutunun değişmemesini sağla
-
+    add_note_window.geometry("700x700") 
+    add_note_window.resizable(False, False)  
     
     tk.Label(add_note_window, text="Notunuzu Yazın:", font=("Arial", 14, "bold"), bg="#0000FF", fg="white").grid(row=0, column=0, pady=20, padx=10)
 
@@ -34,7 +33,7 @@ def open_add_note():
   
     ttk.Button(add_note_window, text="Kaydet", command=save_note, style="TButton").grid(row=3, column=0, pady=20, padx=10)
 
-# Ana Pencere
+
 root = tk.Tk()
 root.title("Yapışkan Notlar")
 root.geometry("500x500")  
