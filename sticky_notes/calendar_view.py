@@ -9,12 +9,12 @@ def open_calendar():
         selected_date = cal.get_date()
         notes = db_manager.get_notes_by_date(selected_date)
 
-       
         notes_window = tk.Toplevel(root)
         notes_window.title(f"Notlar - {selected_date}")
-        notes_window.geometry("600x400")
-
        
+        notes_window.geometry("500x300")
+        notes_window.resizable(False, False) 
+
         try:
             bg_image = Image.open("assets/notes.png")
             bg_image = bg_image.resize((600, 400), Image.Resampling.LANCZOS)  
@@ -29,13 +29,15 @@ def open_calendar():
         
         if notes:
             for note in notes:
-                tk.Label(notes_window, text=f"- {note[1]}", wraplength=300, justify="left", font=("Arial", 14), bg="#f7f7f7").pack(pady=10)
+                tk.Label(notes_window, text=f"- {note[1]}", wraplength=300, justify="left", font=("Arial", 14), bg="#f7f7f7").pack(pady=(20, 0))
         else:
             tk.Label(notes_window, text="Bu tarihte not bulunamadı.", font=("Arial", 14), fg="red", bg="#f7f7f7").pack(pady=30)
 
     root = tk.Toplevel()
     root.title("Takvim")
+    
     root.geometry("400x400")
+    root.resizable(False, False) 
 
     tk.Label(root, text="Bir Tarih Seçin:", font=("Arial", 12)).pack(pady=20)
     cal = Calendar(root, selectmode="day", date_pattern="yyyy-mm-dd")
