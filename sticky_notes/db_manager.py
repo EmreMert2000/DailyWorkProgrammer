@@ -9,7 +9,6 @@ def create_tables():
     conn = connect()
     cursor = conn.cursor()
     
-    # Create the notes table if it doesn't exist
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS notes (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -17,8 +16,7 @@ def create_tables():
         date TEXT NOT NULL
     )
     """)
-
-    # Create the fixed_dates table to track fixed dates
+    
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS fixed_dates (
         date TEXT PRIMARY KEY
@@ -38,32 +36,21 @@ def add_note(content, date):
 def get_notes_by_date(date):
     conn = connect()
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM notes WHERE date = ?", (date,))
+    cursor.execute("SELECT id, content FROM notes WHERE date = ?", (date,))
     notes = cursor.fetchall()
     conn.close()
     return notes
 
-# Check if a date is fixed
-def check_if_fixed(date):
+def update_note(note_id, new_content):
     conn = connect()
     cursor = conn.cursor()
-    cursor.execute("SELECT 1 FROM fixed_dates WHERE date = ?", (date,))
-    result = cursor.fetchone()
-    conn.close()
-    return result is not None
-
-# Add a date to the fixed dates table
-def add_fixed(date):
-    conn = connect()
-    cursor = conn.cursor()
-    cursor.execute("INSERT INTO fixed_dates (date) VALUES (?)", (date,))
+    cursor.execute("UPDATE notes SET content = ? WHERE id = ?", (new_content, note_id))
     conn.commit()
     conn.close()
 
-# Remove a date from the fixed dates table
-def remove_fixed(date):
+def delete_note(note_id):
     conn = connect()
     cursor = conn.cursor()
-    cursor.execute("DELETE FROM fixed_dates WHERE date = ?", (date,))
+    cursor.execute("DELETE FROM notes WHERE id = ?", (note_id,))
     conn.commit()
     conn.close()
